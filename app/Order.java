@@ -5,21 +5,52 @@ import java.util.*;
 public class Order {
     public String clientName;
     public String clientEmail;
-    public List<String> products = new ArrayList<>();
-    public List<Integer> quantities = new ArrayList<>();
-    public List<Double> prices = new ArrayList<>();
+    private HashMap<Product, Integer> products = new HashMap<>();
+    
     public double discountRate = 0.1;
 
     public void printInvoice() {
-        double total = 0;
+        var total = 0;
         System.out.println("Cliente: " + clientName);
-        for (int i = 0; i < products.size(); i++) {
-            System.out.println(quantities.get(i) + "x " + products.get(i) + " - R$" + prices.get(i));
-            total += prices.get(i) * quantities.get(i);
+
+        for( var entry : products.entrySet()){
+            var product = entry.getKey();
+            var ammount = entry.getValue();
+            System.out.println(ammount + "x " + product + " - R$" + product.price);
+            total += ammount * product.price;
         }
+
         System.out.println("Subtotal: R$" + total);
         System.out.println("Desconto: R$" + (total * discountRate));
         System.out.println("Total final: R$" + (total * (1 - discountRate)));
+    }
+
+    public void addProduct(Product p){
+        var ammount = products.getOrDefault(p, 0);
+        products.put(p, ammount + 1);
+    }
+
+    public void addProduct(Product p, int ammount){
+        if (ammount < 0){
+            throw new IllegalArgumentException("O Numero de produtos deve ser maior do que zero");
+        }
+
+        var currentAmmount = products.getOrDefault(p, 0);
+        products.put(p, currentAmmount + ammount);
+    }
+
+    public List<Product> getProducts(){
+        List<Product> result = new ArrayList<>();
+        
+        for( var entry : products.entrySet()){
+            var product = entry.getKey();
+            var ammount = entry.getValue();
+
+            for (int i = 0; i < ammount; i++) {
+                result.add(product);
+            }
+        }
+        return result;
     }
 
     public void sendEmail() {
