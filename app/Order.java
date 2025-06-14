@@ -6,7 +6,7 @@ public class Order {
     public String clientName;
     public String clientEmail;
     private HashMap<Product, Integer> products = new HashMap<>();
-    
+
     public double discountRate = 0.1;
 
     public void printInvoice() {
@@ -16,8 +16,8 @@ public class Order {
         for( var entry : products.entrySet()){
             var product = entry.getKey();
             var ammount = entry.getValue();
-            System.out.println(ammount + "x " + product + " - R$" + product.price);
-            total += ammount * product.price;
+            System.out.println(ammount + "x " + product.getName() + " - R$" + product.getPrice());
+            total += ammount * product.getPrice();
         }
 
         System.out.println("Subtotal: R$" + total);
