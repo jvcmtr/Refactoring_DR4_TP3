@@ -28,18 +28,20 @@ public class Order {
         System.out.println("Total final: R$" + (total * (1 - discountRate)));
     }
 
-    public void addProduct(Product p){
+    public Order addProduct(Product p){
         var ammount = products.getOrDefault(p, 0);
         products.put(p, ammount + 1);
+        return this;
     }
 
-    public void addProduct(Product p, int ammount){
+    public Order addProduct(Product p, int ammount){
         if (ammount < 0){
             throw new IllegalArgumentException("O Numero de produtos deve ser maior do que zero");
         }
 
         var currentAmmount = products.getOrDefault(p, 0);
         products.put(p, currentAmmount + ammount);
+        return this;
     }
 
     public List<Product> getProducts(){
