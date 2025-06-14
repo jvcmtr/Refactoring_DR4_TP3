@@ -1,4 +1,4 @@
 @echo off
 echo.
-javac -d ./bin App/App.java
+javac -d ./bin app/*.java
 echo "compilation succeded"
