@@ -6,8 +6,6 @@ public class Order {
     public Client client;
     private HashMap<Product, Integer> products = new HashMap<>();
 
-    public double discountRate = 0.1;
-
     public Order(Client client){
         this.client = client;
     }
@@ -22,10 +20,12 @@ public class Order {
             System.out.println(ammount + "x " + product.getName() + " - R$" + product.getPrice());
             total += ammount * product.getPrice();
         }
+        
+        var discount = DiscountPolicy.calculateDiscount(total);
 
         System.out.println("Subtotal: R$" + total);
-        System.out.println("Desconto: R$" + (total * discountRate));
-        System.out.println("Total final: R$" + (total * (1 - discountRate)));
+        System.out.println("Desconto: R$" + discount);
+        System.out.println("Total final: R$" + (total - discount) ) ;
     }
 
     public Order addProduct(Product p){
