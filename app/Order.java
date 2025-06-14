@@ -3,15 +3,18 @@ package app;
 import java.util.*;
 
 public class Order {
-    public String clientName;
-    public String clientEmail;
+    public Client client;
     private HashMap<Product, Integer> products = new HashMap<>();
 
     public double discountRate = 0.1;
 
+    public Order(Client client){
+        this.client = client;
+    }
+
     public void printInvoice() {
         var total = 0;
-        System.out.println("Cliente: " + clientName);
+        System.out.println("Cliente: " + client.getName());
 
         for( var entry : products.entrySet()){
             var product = entry.getKey();
@@ -54,6 +57,6 @@ public class Order {
     }
 
     public void sendEmail() {
-        EmailService.sendEmail(clientEmail, "Pedido recebido! Obrigado pela compra.");
+        EmailService.sendEmail(client.getEmail(), "Pedido recebido! Obrigado pela compra.");
     }
 }
